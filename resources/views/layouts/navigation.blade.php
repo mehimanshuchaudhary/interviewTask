@@ -11,10 +11,19 @@
 
             <li class="sidebar-item {{ request()->routeIs('access.index') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('access.index') }}">
-                    <i class="align-middle" data-feather="home"></i>
+                    <i class="align-middle" data-feather="lock"></i>
                     <span class="align-middle">Access Control</span>
                 </a>
             </li>
+
+            @can('view_users')
+                <li class="sidebar-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('users.index') }}">
+                        <i class="align-middle" data-feather="users"></i>
+                        <span class="align-middle">User Management</span>
+                    </a>
+                </li>
+            @endcan
 
             <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="#">

@@ -13,5 +13,17 @@
     },
     {
         "name": "view_product"
+    },
+    {
+        "name": "view_users"
+    },
+    {
+        "name": "create_users"
+    },
+    {
+        "name": "edit_users"
+    },
+    {
+        "name": "delete_users"
     }
 ]

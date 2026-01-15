@@ -9,6 +9,13 @@
                 Menu
             </li>
 
+            <li class="sidebar-item {{ request()->routeIs('access.index') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('access.index') }}">
+                    <i class="align-middle" data-feather="home"></i>
+                    <span class="align-middle">Access Control</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="#">
                     <i class="align-middle" data-feather="home"></i>

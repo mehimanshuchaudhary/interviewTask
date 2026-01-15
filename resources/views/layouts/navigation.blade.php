@@ -9,12 +9,14 @@
                 Menu
             </li>
 
-            <li class="sidebar-item {{ request()->routeIs('access.index') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('access.index') }}">
-                    <i class="align-middle" data-feather="lock"></i>
-                    <span class="align-middle">Access Control</span>
-                </a>
-            </li>
+            @can('access_management')
+                <li class="sidebar-item {{ request()->routeIs('access.index') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('access.index') }}">
+                        <i class="align-middle" data-feather="lock"></i>
+                        <span class="align-middle">Access Control</span>
+                    </a>
+                </li>
+            @endcan
 
             @can('view_users')
                 <li class="sidebar-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
@@ -33,20 +35,6 @@
                     </a>
                 </li>
             @endcan
-
-            <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <a class="sidebar-link" href="#">
-                    <i class="align-middle" data-feather="home"></i>
-                    <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item {{ request()->routeIs('admin.centers.*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="#">
-                    <i class="align-middle" data-feather="briefcase"></i>
-                    <span class="align-middle">Center Management</span>
-                </a>
-            </li>
 
             {{-- 
             <li class="sidebar-header">

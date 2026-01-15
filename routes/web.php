@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('access', AccessController::class)->names('access');
+Route::resource('access', AccessController::class)->names('access')->middleware('can:access_management');
 Route::resource('users', \App\Http\Controllers\UserController::class)->names('users');
 Route::resource('products', \App\Http\Controllers\ProductController::class)->names('products');
 

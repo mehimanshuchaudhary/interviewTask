@@ -25,12 +25,12 @@ class AccessDataTable extends DataTable
         if ($this->canShowAction()) {
             $dataTable->addColumn('action', function ($row) {
                 return view('utilities.crm-action-buttons', [
-                    'edit_url'   => auth()->user()->can('edit_users')
-                                    ? route('admin.users.edit', $row->id)
+                    'edit_url'   => auth()->user()->can('access_management')
+                                    ? route('access.edit', $row->id)
                                     : null,
 
-                    'delete_url' => auth()->user()->can('delete_users')
-                                    ? route('admin.users.destroy', $row->id)
+                    'delete_url' => auth()->user()->can('access_management')
+                                    ? route('access.destroy', $row->id)
                                     : null,
                 ]);
             });
@@ -101,7 +101,7 @@ class AccessDataTable extends DataTable
                     ->setTableId('access-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(5, 'desc') // Sort by Created At
+                    ->orderBy(3, 'desc') // Sort by Created At (index 2 or 3 depending on cols)
                     ->selectStyle('os')
                     ->responsive(true)
                     ->scrollX(true)
@@ -124,16 +124,23 @@ class AccessDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::computed('action')
+        $columns = [];
+
+        if ($this->canShowAction()) {
+            $columns[] = Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),
+                  ->addClass('text-center');
+        }
+
+        $columns = array_merge($columns, [
             Column::make('name'),
             Column::make('created_at'),
             Column::make('updated_at'),
-        ];
+        ]);
+
+        return $columns;
     }
 
     /**
@@ -146,7 +153,6 @@ class AccessDataTable extends DataTable
 
     protected function canShowAction(): bool
     {
-        return auth()->user()->can('edit_users')
-            || auth()->user()->can('delete_users');
+        return auth()->user()->can('access_management');
     }
 }

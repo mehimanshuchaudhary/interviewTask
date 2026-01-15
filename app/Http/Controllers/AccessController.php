@@ -54,7 +54,9 @@ class AccessController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = \Spatie\Permission\Models\Role::findOrFail($id);
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        return view('access.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -62,7 +64,18 @@ class AccessController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $role = \Spatie\Permission\Models\Role::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $role->id,
+            'permissions' => 'required|array',
+            'permissions.*' => 'exists:permissions,name',
+        ]);
+
+        $role->update(['name' => $request->name]);
+        $role->syncPermissions($request->permissions);
+
+        return redirect()->route('access.index')->with('success', 'Role updated successfully.');
     }
 
     /**

@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
@@ -23,21 +25,36 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
         ]);
 
-        $user = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
+        // Create Roles
+        $adminRole = Role::firstOrCreate(['name' => 'Admin']);
+        $managerRole = Role::firstOrCreate(['name' => 'Manager']);
 
-        // Assign permissions (team-aware)
-        $permissions = json_decode(
-            file_get_contents(base_path('database/seeders/permissions.json'))
+        // Assign Permissions to Roles
+        $adminPermissions = Permission::all();
+        $adminRole->syncPermissions($adminPermissions);
+
+        $managerPermissions = Permission::whereIn('name', ['view_product'])->get();
+        $managerRole->syncPermissions($managerPermissions);
+
+        // Create Users
+        $adminUser = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
         );
+        $adminUser->assignRole($adminRole);
 
-        foreach ($permissions as $permission) {
-            if (! $user->hasPermissionTo($permission->name)) {
-                $user->givePermissionTo($permission->name);
-            }
-        }
+        $managerUser = User::firstOrCreate(
+            ['email' => 'manager@example.com'],
+            [
+                'name' => 'Manager User',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+        $managerUser->assignRole($managerRole);
     }
 }

@@ -25,6 +25,15 @@
                 </li>
             @endcan
 
+            @can('view_product')
+                <li class="sidebar-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('products.index') }}">
+                        <i class="align-middle" data-feather="shopping-bag"></i>
+                        <span class="align-middle">Product Management</span>
+                    </a>
+                </li>
+            @endcan
+
             <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="#">
                     <i class="align-middle" data-feather="home"></i>

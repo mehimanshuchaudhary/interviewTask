@@ -20,5 +20,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('access', AccessController::class)->names('access');
 Route::resource('users', \App\Http\Controllers\UserController::class)->names('users');
+Route::resource('products', \App\Http\Controllers\ProductController::class)->names('products');
 
 require __DIR__.'/auth.php';

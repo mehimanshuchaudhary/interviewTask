@@ -88,7 +88,7 @@ class AccessDataTable extends DataTable
         
         if (1) {
             $buttons[] = Button::raw('add')
-                ->text('+ Add User')
+                ->text('+ Add Role')
                 ->attr([
                     'class' => 'btn btn-success',
                 ])
@@ -130,7 +130,7 @@ class AccessDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
+            Column::make('name'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

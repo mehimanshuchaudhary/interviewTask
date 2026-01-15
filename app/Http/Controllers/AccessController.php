@@ -20,7 +20,8 @@ class AccessController extends Controller
      */
     public function create()
     {
-        //
+         $permissions = \Spatie\Permission\Models\Permission::all();
+         return view('access.create', compact('permissions'));
     }
 
     /**
@@ -28,7 +29,16 @@ class AccessController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name',
+            'permissions' => 'required|array',
+            'permissions.*' => 'exists:permissions,name',
+        ]);
+
+        $role = \Spatie\Permission\Models\Role::create(['name' => $request->name]);
+        $role->syncPermissions($request->permissions);
+
+        return redirect()->route('access.index')->with('success', 'Role created successfully.');
     }
 
     /**

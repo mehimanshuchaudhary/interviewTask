@@ -1,0 +1,17 @@
+[
+    {
+        "name": "access_management"
+    },
+    {
+        "name": "create_product"
+    },
+    {
+        "name": "edit_product"
+    },
+    {
+        "name": "delete_product"
+    },
+    {
+        "name": "view_product"
+    }
+]

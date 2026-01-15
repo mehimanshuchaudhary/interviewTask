@@ -37,10 +37,10 @@
                 <div class="container-fluid">
                     <div class="row text-muted">
                         <div class="col-6 text-start">
-                            <p class="mb-0">Navastitva Foundation &copy;</p>
+                            <p class="mb-0">Himanshu Chaudhary &copy;</p>
                         </div>
                         <div class="col-6 text-end">
-                            Proudly Developed and Maintained by PropelXP
+                            FreeLance
                         </div>
                     </div>
                 </div>
